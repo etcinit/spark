@@ -1,9 +1,9 @@
 package logical
 
 import (
-	"github.com/etcinit/spec/constraints/types"
-	"github.com/etcinit/spec/core"
-	"github.com/etcinit/spec/fulfillment"
+	"github.com/etcinit/spark/constraints/types"
+	"github.com/etcinit/spark/core"
+	"github.com/etcinit/spark/fulfillment"
 )
 
 // MaybeConstraint is a constraint that can be satisfied when either its inner

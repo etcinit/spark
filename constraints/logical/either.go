@@ -1,8 +1,8 @@
 package logical
 
 import (
-	"github.com/etcinit/spec/core"
-	"github.com/etcinit/spec/fulfillment"
+	"github.com/etcinit/spark/core"
+	"github.com/etcinit/spark/fulfillment"
 )
 
 // EitherConstraint is a constraint that can be satisfied when either one of

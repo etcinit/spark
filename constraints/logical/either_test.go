@@ -3,7 +3,7 @@ package logical
 import (
 	"testing"
 
-	"github.com/etcinit/spec/constraints/types"
+	"github.com/etcinit/spark/constraints/types"
 	"github.com/stretchr/testify/assert"
 )
 
