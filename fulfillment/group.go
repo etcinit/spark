@@ -14,6 +14,25 @@ type GroupContextResult struct {
 	failed []ContextFulfillable
 }
 
+// NewGroupResult creates a new instance of a GroupResult.
+func NewGroupResult(passed []Fulfillable, failed []Fulfillable) *GroupResult {
+	return &GroupResult{
+		passed: passed,
+		failed: failed,
+	}
+}
+
+// NewGroupContextResult creates a new instance of a GroupContextResult.
+func NewGroupContextResult(
+	passed []ContextFulfillable,
+	failed []ContextFulfillable,
+) *GroupContextResult {
+	return &GroupContextResult{
+		passed: passed,
+		failed: failed,
+	}
+}
+
 // GetPassed gets all the constraints that passed.
 func (r *GroupResult) GetPassed() []Fulfillable {
 	return r.passed

@@ -8,6 +8,29 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestNewGroupResult(t *testing.T) {
+	result := NewGroupResult(
+		[]Fulfillable{&types.StringConstraint{}},
+		[]Fulfillable{&types.IntConstraint{}, &types.IntConstraint{}},
+	)
+
+	assert.Equal(t, 1, len(result.GetPassed()))
+	assert.Equal(t, 2, len(result.GetFailed()))
+}
+
+func TestNewGroupContextResult(t *testing.T) {
+	result := NewGroupContextResult(
+		[]ContextFulfillable{&context.RequiredConstraint{}},
+		[]ContextFulfillable{
+			&context.RequiredConstraint{},
+			&context.RequiredConstraint{},
+		},
+	)
+
+	assert.Equal(t, 1, len(result.GetPassed()))
+	assert.Equal(t, 2, len(result.GetFailed()))
+}
+
 func TestGroupResultGetPassed(t *testing.T) {
 	result := GroupResult{
 		passed: []Fulfillable{

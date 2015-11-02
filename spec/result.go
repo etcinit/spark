@@ -27,7 +27,10 @@ func NewResult() *Result {
 
 // SetFieldResults sets the constraints that passed and failed for single
 // field.
-func (r *Result) SetFieldResults(field string, group *GroupResult) {
+func (r *Result) SetFieldResults(
+	field string,
+	group *fulfillment.GroupResult,
+) {
 	r.passed[field] = group.GetPassed()
 	r.failed[field] = group.GetFailed()
 
@@ -38,7 +41,7 @@ func (r *Result) SetFieldResults(field string, group *GroupResult) {
 
 // SetContextResults sets the constraints that passed and failed for the
 // context.
-func (r *Result) SetContextResults(group *GroupContextResult) {
+func (r *Result) SetContextResults(group *fulfillment.GroupContextResult) {
 	r.contextPassed = group.GetPassed()
 	r.contextFailed = group.GetFailed()
 

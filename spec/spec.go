@@ -22,7 +22,7 @@ func (s *Spec) Run(input map[string]interface{}) *Result {
 	// Fields in Check will always be checked.
 	for _, field := range s.Check {
 		if constraints, ok := s.GetField(field); ok == true {
-			groupResult := fulfillment.CheckGroup(input[field], constraints)
+			groupResult := fulfillment.CheckGroup(input[field], input, constraints)
 
 			result.SetFieldResults(field, groupResult)
 			checked[field] = true
@@ -34,7 +34,7 @@ func (s *Spec) Run(input map[string]interface{}) *Result {
 			continue
 		}
 
-		groupResult := fulfillment.CheckGroup(input[field], constraints)
+		groupResult := fulfillment.CheckGroup(input[field], input, constraints)
 
 		result.SetFieldResults(field, groupResult)
 		checked[field] = true
@@ -45,10 +45,12 @@ func (s *Spec) Run(input map[string]interface{}) *Result {
 		s.Context,
 	))
 
-	return &result
+	return result
 }
 
 // GetField attempts to get the constraints for a specific field.
 func (s *Spec) GetField(key string) ([]fulfillment.Fulfillable, bool) {
-	return s.Fields[key]
+	value, ok := s.Fields[key]
+
+	return value, ok
 }

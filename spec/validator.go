@@ -25,15 +25,15 @@ func (v *Validator) Run(input map[string]interface{}) *ValidatorResult {
 	// Add default value to the input array.
 	for index, value := range v.Defaults {
 		if _, exists := input[index]; exists == false {
-			input[index] = v.Defaults[index]
+			input[index] = value
 		}
 	}
 
 	// Run the input through the spec.
-	specResult := v.Run(input)
+	specResult := v.Spec.Run(input)
 
 	return &ValidatorResult{
-		SpecResult:      specResult,
+		SpecResult:      *specResult,
 		Messages:        extractFailedMessagesFromResult(specResult, input),
 		ContextMessages: extractFailedContextMessagesFromResult(specResult, input),
 	}
@@ -51,7 +51,7 @@ func extractFailedMessagesFromResult(
 		for _, constraint := range constraints {
 			messages[field] = append(
 				messages[field],
-				getConstraintDescription(field, constraint, context[field], context),
+				getConstraintDescription(constraint, field, context[field], context),
 			)
 		}
 	}
@@ -66,7 +66,7 @@ func extractFailedContextMessagesFromResult(
 	messages := []string{}
 
 	for _, constraint := range result.GetContextFailed() {
-		messages := append(
+		messages = append(
 			messages,
 			getConstraintDescription(constraint, "", nil, context),
 		)
