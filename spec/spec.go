@@ -8,8 +8,11 @@ import "github.com/etcinit/spark/fulfillment"
 // The purpose of Spec is to facilitate user input validation and generation of
 // repsonse messages with explanations of why validation passed or failed.
 type Spec struct {
-	Fields  map[string][]fulfillment.Fulfillable
-	Check   []string
+	// Fields is a map of a field and the constraints to apply to it.
+	Fields map[string][]fulfillment.Fulfillable
+	// Check are the fields that
+	Check []string
+	// Context are the context-only constraint for this spec.
 	Context []fulfillment.ContextFulfillable
 }
 
