@@ -1,38 +1,36 @@
 package fulfillment
 
-import "github.com/etcinit/spark/fulfillment"
-
 // GroupResult represents the result of checking multiple constraints against
 // one value.
 type GroupResult struct {
-	passed []fulfillment.Fulfillable
-	failed []fulfillment.Fulfillable
+	passed []Fulfillable
+	failed []Fulfillable
 }
 
 // GroupContextResult represents the result of checking multiple constraints
 // against a map.
 type GroupContextResult struct {
-	passed []fulfillment.ContextFulfillable
-	failed []fulfillment.ContextFulfillable
+	passed []ContextFulfillable
+	failed []ContextFulfillable
 }
 
 // GetPassed gets all the constraints that passed.
-func (r *GroupResult) GetPassed() []fulfillment.Fulfillable {
+func (r *GroupResult) GetPassed() []Fulfillable {
 	return r.passed
 }
 
 // GetFailed gets all the constraints that failed.
-func (r *GroupResult) GetFailed() []fulfillment.Fulfillable {
+func (r *GroupResult) GetFailed() []Fulfillable {
 	return r.failed
 }
 
 // GetPassed gets all the constraints that passed.
-func (r *GroupContextResult) GetPassed() []fulfillment.ContextFulfillable {
+func (r *GroupContextResult) GetPassed() []ContextFulfillable {
 	return r.passed
 }
 
 // GetFailed gets all the constraints that failed.
-func (r *GroupContextResult) GetFailed() []fulfillment.ContextFulfillable {
+func (r *GroupContextResult) GetFailed() []ContextFulfillable {
 	return r.failed
 }
 
@@ -41,11 +39,11 @@ func (r *GroupContextResult) GetFailed() []fulfillment.ContextFulfillable {
 func CheckGroup(
 	input interface{},
 	context map[string]interface{},
-	constraints []fulfillment.Fulfillable,
+	constraints []Fulfillable,
 ) *GroupResult {
 	result := GroupResult{
-		passed: []fulfillment.Fulfillable{},
-		failed: []fulfillment.Fulfillable{},
+		passed: []Fulfillable{},
+		failed: []Fulfillable{},
 	}
 
 	for _, constraint := range constraints {
@@ -53,12 +51,12 @@ func CheckGroup(
 			if contextConstraint.IsFulfilledByContext(input, context) {
 				result.passed = append(result.passed, constraint)
 			} else {
-				result.failed = append(result.passed, constraint)
+				result.failed = append(result.failed, constraint)
 			}
 		} else if constraint.IsFulfilled(input) {
 			result.passed = append(result.passed, constraint)
 		} else {
-			result.failed = append(result.passed, constraint)
+			result.failed = append(result.failed, constraint)
 		}
 	}
 
@@ -69,18 +67,18 @@ func CheckGroup(
 // constraints.
 func CheckContext(
 	context map[string]interface{},
-	constraints []fulfillment.ContextFulfillable,
+	constraints []ContextFulfillable,
 ) *GroupContextResult {
 	result := GroupContextResult{
-		passed: []fulfillment.ContextFulfillable{},
-		failed: []fulfillment.ContextFulfillable{},
+		passed: []ContextFulfillable{},
+		failed: []ContextFulfillable{},
 	}
 
 	for _, constraint := range constraints {
-		if contextConstraint.IsFulfilledByContext(input, context) {
+		if constraint.IsFulfilledByContext(nil, context) {
 			result.passed = append(result.passed, constraint)
 		} else {
-			result.failed = append(result.passed, constraint)
+			result.failed = append(result.failed, constraint)
 		}
 	}
 
