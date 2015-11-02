@@ -18,3 +18,15 @@ type ContextFulfillable interface {
 	IsFulfilled(interface{}) bool
 	IsFulfilledByContext(interface{}, map[string]interface{}) bool
 }
+
+// FailureDescribable represents an object that can explain or describe why its
+// constraint failed to pass on a certain value.
+type FailureDescribable interface {
+	DescribeFailure(string, interface{}, map[string]interface{}) string
+}
+
+// ContextFailureDescribable represents an object that can explain or describe
+// why its constraint failed to pass on a certain value.
+type ContextFailureDescribable interface {
+	DescribeContextFailure(map[string]interface{}) string
+}
